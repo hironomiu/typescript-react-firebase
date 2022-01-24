@@ -2,6 +2,34 @@
 
 firebase v9 の認証サンプル
 
+## Run
+
+```
+npm start
+```
+
+## SetUp
+
+```
+npm install
+```
+
+### .env or .env.local
+
+プロジェクトディレクトリ直下に`.env` or `.env.local`を作成し Firebase のクレデンシャルを設定すること(`.env`は`.gitignore`には記述していないため追記すること)また下記の設定値は Firebase の利用するサービスにより不要、追加が必要なものがあるため適時追記、削除すること aa
+
+```
+REACT_APP_FIREBASE_API_KEY=''
+REACT_APP_FIREBASE_AUTH_DOMAIN=''
+REACT_APP_FIREBASE_DATABASE_URL=''
+REACT_APP_FIREBASE_PROJECT_ID=''
+REACT_APP_FIREBASE_STORAGE_BUCKET=''
+REACT_APP_FIREBASE_MESSAGING_SENDER_ID=''
+REACT_APP_FIREBASE_APP_ID=''
+```
+
+## Install Memo
+
 ```
 npx create-react-app . --template typescript
 ```
