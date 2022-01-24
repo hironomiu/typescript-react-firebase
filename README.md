@@ -28,6 +28,22 @@ REACT_APP_FIREBASE_MESSAGING_SENDER_ID=''
 REACT_APP_FIREBASE_APP_ID=''
 ```
 
+### GitHub
+
+GitHub カウントを事前に用意
+
+GitHub -> Settings -> Developer settings -> OAuth Apps -> New OAuth Apps で作成
+
+Firebase -> Authentication -> Sign-in method -> 新しいプロバイダを追加 -> GitHub を選択
+
+### Twitter
+
+Twitter Developer アカウントを事前に用意、Twitter API v2 を利用する場合はアカウント承認後 Elevated の申請も行う
+
+Twitter Developer Portal -> Overview -> Add App で作成
+
+Firebase -> Authentication -> Sign-in method -> 新しいプロバイダを追加 -> Twitter を選択
+
 ## Install Memo
 
 ```
