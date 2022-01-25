@@ -28,6 +28,12 @@ REACT_APP_FIREBASE_MESSAGING_SENDER_ID=''
 REACT_APP_FIREBASE_APP_ID=''
 ```
 
+### Mail & Password
+
+Firebase -> Authentication -> Sign-in method -> 新しいプロバイダを追加 -> メール/パスワード を選択
+
+SignUp 実装までは手動で Authentication -> Users -> ユーザを追加 でユーザ登録し認証
+
 ### GitHub
 
 GitHub カウントを事前に用意
