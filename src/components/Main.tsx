@@ -1,10 +1,10 @@
-import { FC, useState } from 'react'
+import { FC, useState, memo } from 'react'
 import { signOut } from '../firebase/auth/signOut'
 import Twitter from './Twitter'
 import GitHub from './GitHub'
 import Email from './EmailPassword'
 
-const Main: FC = () => {
+const Main: FC = memo(() => {
   const [isLogin, setIsLogin] = useState<boolean>(false)
 
   if (!isLogin) {
@@ -33,6 +33,6 @@ const Main: FC = () => {
       </button>
     </>
   )
-}
+})
 
 export default Main
