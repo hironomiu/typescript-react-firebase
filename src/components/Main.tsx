@@ -1,4 +1,4 @@
-import { FC, useState, memo } from 'react'
+import { FC, useState, memo, useCallback } from 'react'
 import { signOut } from '../firebase/auth/signOut'
 import Twitter from './Twitter'
 import GitHub from './GitHub'
@@ -6,10 +6,10 @@ import Email from './EmailPassword'
 
 const Main: FC = memo(() => {
   const [isLogin, setIsLogin] = useState<boolean>(false)
-  const firebaeSignOut = async () => {
+  const firebaeSignOut = useCallback(async () => {
     await signOut()
     setIsLogin(false)
-  }
+  }, [])
 
   if (!isLogin) {
     return (
