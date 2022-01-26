@@ -6,6 +6,10 @@ import Email from './EmailPassword'
 
 const Main: FC = memo(() => {
   const [isLogin, setIsLogin] = useState<boolean>(false)
+  const firebaeSignOut = async () => {
+    await signOut()
+    setIsLogin(false)
+  }
 
   if (!isLogin) {
     return (
@@ -20,17 +24,9 @@ const Main: FC = memo(() => {
   return (
     <>
       <div>
-        <span>Lgoine</span>
+        <span>Logged in</span>
       </div>
-      <button
-        onClick={async () => {
-          const res = await signOut()
-          setIsLogin(false)
-          console.log(res)
-        }}
-      >
-        Logout?
-      </button>
+      <button onClick={() => firebaeSignOut()}>Logout?</button>
     </>
   )
 })
