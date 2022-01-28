@@ -22,7 +22,7 @@ npm run build
 
 ### .env or .env.local
 
-プロジェクトディレクトリ直下に`.env` or `.env.local`を作成し Firebase のクレデンシャルを設定すること(`.env`は`.gitignore`には記述していないため追記すること)また下記の設定値は Firebase の利用するサービスにより不要、追加が必要なものがあるため適時追記、削除すること aa
+プロジェクトディレクトリ直下に`.env` or `.env.local`を作成し Firebase のクレデンシャルを設定すること(`.env`は`.gitignore`には記述していないため追記すること)また下記の設定値は Firebase の利用するサービスにより不要、追加が必要なものがあるため適時追記、削除すること(下記は REALTIME DATABASE の設定が含まれている)
 
 ```
 REACT_APP_FIREBASE_API_KEY=''
