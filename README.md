@@ -50,6 +50,10 @@ Twitter Developer Portal -> Overview -> Add App で作成
 
 Firebase -> Authentication -> Sign-in method -> 新しいプロバイダを追加 -> Twitter を選択
 
+### Google
+
+Firebase -> Authentication -> Sign-in method -> 新しいプロバイダを追加 -> Google を選択
+
 ## Install Memo
 
 ```

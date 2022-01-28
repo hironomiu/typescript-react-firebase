@@ -14,6 +14,11 @@
   flex-direction: column;
 }
 
+#google-auth {
+  display: flex;
+  flex-direction: column;
+}
+
 #email-password-auth {
   display: flex;
   flex-direction: column;
