@@ -4,6 +4,10 @@
   text-align: center;
 }
 
+button {
+  background-color: skyblue;
+}
+
 #twitter-auth {
   display: flex;
   flex-direction: column;
