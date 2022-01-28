@@ -8,6 +8,7 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth'
 
 const Main: FC = memo(() => {
   const [isLogin, setIsLogin] = useState<boolean>(false)
+  const [isLoading, setIsloading] = useState<boolean>(false)
   const firebaeSignOut = useCallback(async () => {
     await signOut()
     setIsLogin(false)
@@ -15,6 +16,7 @@ const Main: FC = memo(() => {
 
   useEffect(() => {
     // TODO 外に出す
+    setIsloading(true)
     const auth = getAuth()
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -22,8 +24,11 @@ const Main: FC = memo(() => {
       } else {
         setIsLogin(false)
       }
+      setIsloading(false)
     })
   }, [])
+
+  if (isLoading) return <>Loaging...</>
 
   if (!isLogin) {
     return (
