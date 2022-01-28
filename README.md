@@ -28,13 +28,13 @@ REACT_APP_FIREBASE_MESSAGING_SENDER_ID=''
 REACT_APP_FIREBASE_APP_ID=''
 ```
 
-### Mail & Password
+### Mail & Password 認証
 
 Firebase -> Authentication -> Sign-in method -> 新しいプロバイダを追加 -> メール/パスワード を選択
 
 SignUp 実装までは手動で Authentication -> Users -> ユーザを追加 でユーザ登録し認証
 
-### GitHub
+### GitHub 認証
 
 GitHub カウントを事前に用意
 
@@ -42,7 +42,7 @@ GitHub -> Settings -> Developer settings -> OAuth Apps -> New OAuth Apps で作�
 
 Firebase -> Authentication -> Sign-in method -> 新しいプロバイダを追加 -> GitHub を選択
 
-### Twitter
+### Twitter 認証
 
 Twitter Developer アカウントを事前に用意、Twitter API v2 を利用する場合はアカウント承認後 Elevated の申請も行う
 
@@ -50,7 +50,7 @@ Twitter Developer Portal -> Overview -> Add App で作成
 
 Firebase -> Authentication -> Sign-in method -> 新しいプロバイダを追加 -> Twitter を選択
 
-### Google
+### Google 認証
 
 Firebase -> Authentication -> Sign-in method -> 新しいプロバイダを追加 -> Google を選択
 
