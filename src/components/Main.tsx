@@ -1,15 +1,28 @@
-import { FC, useState, memo, useCallback } from 'react'
+import { FC, useState, memo, useCallback, useEffect } from 'react'
 import { signOut } from '../firebase/auth/signOut'
 import Twitter from './Twitter'
 import GitHub from './GitHub'
 import Google from './Google'
 import Email from './EmailPassword'
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
 
 const Main: FC = memo(() => {
   const [isLogin, setIsLogin] = useState<boolean>(false)
   const firebaeSignOut = useCallback(async () => {
     await signOut()
     setIsLogin(false)
+  }, [])
+
+  useEffect(() => {
+    // TODO 外に出す
+    const auth = getAuth()
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setIsLogin(true)
+      } else {
+        setIsLogin(false)
+      }
+    })
   }, [])
 
   if (!isLogin) {
@@ -22,8 +35,6 @@ const Main: FC = memo(() => {
       </>
     )
   }
-
-  // TODO リロード時のログイン状態のチェック
 
   return (
     <>
