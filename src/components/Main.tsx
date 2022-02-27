@@ -5,13 +5,30 @@ import GitHub from './GitHub'
 import Google from './Google'
 import Email from './EmailPassword'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
+import { dataRef } from '../firebase/realtime-database/dataRef'
+import { onValue } from 'firebase/database'
 
 const Main: FC = memo(() => {
   const [isLogin, setIsLogin] = useState<boolean>(false)
   const [isLoading, setIsloading] = useState<boolean>(false)
+  // TODO 型
+  const [messages, setMessages] = useState<any>()
   const firebaeSignOut = useCallback(async () => {
     await signOut()
     setIsLogin(false)
+  }, [])
+
+  useEffect(() => {
+    onValue(dataRef('messages'), (snapshot) => {
+      const data = snapshot.val()
+      if (!data) return
+      const entries = Object.entries(data)
+      const newData = entries.map((entry: any) => {
+        const [key, message] = entry
+        return { key, ...message }
+      })
+      setMessages(newData)
+    })
   }, [])
 
   useEffect(() => {
@@ -45,6 +62,11 @@ const Main: FC = memo(() => {
     <>
       <div>
         <span>Logged in</span>
+        {messages.map((data: { key: string; name: string; text: string }) => (
+          <div key={data.key}>
+            {data.name}:{data.text}
+          </div>
+        ))}
       </div>
       <button onClick={() => firebaeSignOut()}>Logout?</button>
     </>
