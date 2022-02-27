@@ -30,13 +30,12 @@ export const useMain = () => {
 
   useEffect(() => {
     setIsloading(true)
-
     onValue(queryRef('messages'), (snapshot) => {
       const data = snapshot.val()
       if (!data) return
       const entries = Object.entries(data)
       // TODO 型
-      const newData: Message[] = entries.map((entry: any) => {
+      const newData: Message[] = entries.map((entry: [string, any]) => {
         const [key, message] = entry
         return { key, ...message }
       })
@@ -44,6 +43,7 @@ export const useMain = () => {
       setIsloading(false)
     })
   }, [setMessages])
+
   // TODO ./firebase/realtime-database配下にライブラリとして配置可能なものは移動する
   // useEffect(() => {
   //   setIsloading(true)
