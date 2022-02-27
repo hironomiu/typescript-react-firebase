@@ -31,7 +31,7 @@ export const useMain = () => {
   useEffect(() => {
     setIsloading(true)
 
-    onValue(queryRef, (snapshot) => {
+    onValue(queryRef('messages'), (snapshot) => {
       const data = snapshot.val()
       if (!data) return
       const entries = Object.entries(data)
