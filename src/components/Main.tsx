@@ -19,6 +19,7 @@ const Main: FC = memo(() => {
   }, [])
 
   useEffect(() => {
+    setIsloading(true)
     onValue(dataRef('messages'), (snapshot) => {
       const data = snapshot.val()
       if (!data) return
@@ -28,8 +29,9 @@ const Main: FC = memo(() => {
         return { key, ...message }
       })
       setMessages(newData)
+      setIsloading(false)
     })
-  }, [])
+  }, [setMessages])
 
   useEffect(() => {
     // TODO 外に出す
@@ -60,13 +62,18 @@ const Main: FC = memo(() => {
 
   return (
     <>
+      <h1>Logged in</h1>
+
       <div>
-        <span>Logged in</span>
-        {messages.map((data: { key: string; name: string; text: string }) => (
-          <div key={data.key}>
-            {data.name}:{data.text}
-          </div>
-        ))}
+        {messages
+          ? messages.map(
+              (data: { key: string; name: string; text: string }) => (
+                <div key={data.key}>
+                  {data.name}:{data.text}
+                </div>
+              )
+            )
+          : null}
       </div>
       <button onClick={() => firebaeSignOut()}>Logout?</button>
     </>
