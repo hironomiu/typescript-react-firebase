@@ -4,6 +4,7 @@ import { signOut } from '../firebase/auth/signOut'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { dataPush } from '../firebase/realtime-database/dataPush'
 import { dataRef } from '../firebase/realtime-database/dataRef'
+import { queryRef } from '../firebase/realtime-database/query'
 
 type Message = {
   key: string
@@ -27,10 +28,10 @@ export const useMain = () => {
     setIsLogin(false)
   }, [])
 
-  // TODO ./firebase/realtime-database配下にライブラリとして配置可能なものは移動する
   useEffect(() => {
     setIsloading(true)
-    onValue(dataRef('messages'), (snapshot) => {
+
+    onValue(queryRef, (snapshot) => {
       const data = snapshot.val()
       if (!data) return
       const entries = Object.entries(data)
@@ -43,6 +44,22 @@ export const useMain = () => {
       setIsloading(false)
     })
   }, [setMessages])
+  // TODO ./firebase/realtime-database配下にライブラリとして配置可能なものは移動する
+  // useEffect(() => {
+  //   setIsloading(true)
+  //   onValue(dataRef('messages'), (snapshot) => {
+  //     const data = snapshot.val()
+  //     if (!data) return
+  //     const entries = Object.entries(data)
+  //     // TODO 型
+  //     const newData: Message[] = entries.map((entry: any) => {
+  //       const [key, message] = entry
+  //       return { key, ...message }
+  //     })
+  //     setMessages(newData)
+  //     setIsloading(false)
+  //   })
+  // }, [setMessages])
 
   useEffect(() => {
     // TODO 外に出す
