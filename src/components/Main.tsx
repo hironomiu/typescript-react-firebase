@@ -5,8 +5,9 @@ import GitHub from './GitHub'
 import Google from './Google'
 import Email from './EmailPassword'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
-import { database, dataRef } from '../firebase/realtime-database/dataRef'
-import { onValue, ref, push } from 'firebase/database'
+import { dataRef } from '../firebase/realtime-database/dataRef'
+import { dataPush } from '../firebase/realtime-database/dataPush'
+import { onValue } from 'firebase/database'
 
 type Message = {
   key: string
@@ -78,11 +79,7 @@ const Main: FC = memo(() => {
     setMessage({ ...message, text: e.target.value })
   }
   const handleClick = () => {
-    // TODO ./firebase/realtime-databa内に切り出す
-    push(ref(database, 'messages'), {
-      name: message.name,
-      text: message.text,
-    })
+    dataPush({ refName: 'messages', ...message })
   }
 
   return (
