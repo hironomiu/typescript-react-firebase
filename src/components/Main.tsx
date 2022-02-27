@@ -8,11 +8,15 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { dataRef } from '../firebase/realtime-database/dataRef'
 import { onValue } from 'firebase/database'
 
+type Message = {
+  key: string
+  name: string
+  text: string
+}
 const Main: FC = memo(() => {
   const [isLogin, setIsLogin] = useState<boolean>(false)
   const [isLoading, setIsloading] = useState<boolean>(false)
-  // TODO 型
-  const [messages, setMessages] = useState<any>()
+  const [messages, setMessages] = useState<Message[]>()
   const firebaeSignOut = useCallback(async () => {
     await signOut()
     setIsLogin(false)
@@ -24,7 +28,8 @@ const Main: FC = memo(() => {
       const data = snapshot.val()
       if (!data) return
       const entries = Object.entries(data)
-      const newData = entries.map((entry: any) => {
+      // TODO 型
+      const newData: Message[] = entries.map((entry: any) => {
         const [key, message] = entry
         return { key, ...message }
       })
