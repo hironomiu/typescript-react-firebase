@@ -3,8 +3,9 @@ import { onValue } from 'firebase/database'
 import { signOut } from '../firebase/auth/signOut'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { dataPush } from '../firebase/realtime-database/dataPush'
-import { dataRef } from '../firebase/realtime-database/dataRef'
+// import { dataRef } from '../firebase/realtime-database/dataRef'
 import { queryRef } from '../firebase/realtime-database/query'
+import { test } from '../firebase/firestore/firestoreRef'
 
 type Message = {
   key: string
@@ -28,6 +29,9 @@ export const useMain = () => {
     setIsLogin(false)
   }, [])
 
+  useEffect(() => {
+    test()
+  }, [])
   useEffect(() => {
     setIsloading(true)
     onValue(queryRef('messages'), (snapshot) => {

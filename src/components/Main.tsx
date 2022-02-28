@@ -36,26 +36,59 @@ const Main: FC = memo(() => {
       <h1>
         Logged in <button onClick={firebaeSignOut}>Logout?</button>
       </h1>
-      <input
-        type="text"
-        placeholder="name"
-        value={message.name}
-        onChange={handleNameChange}
-      />
-      <input
-        type="text"
-        placeholder="text"
-        value={message.text}
-        onChange={handleTextChange}
-      />
-      <button onClick={handleClick}>投稿</button>
-      {messages
-        ? messages.map((data: { key: string; name: string; text: string }) => (
-            <div key={data.key}>
-              {data.name}:{data.text}
-            </div>
-          ))
-        : null}
+
+      <div style={{ display: 'flex' }}>
+        <div>
+          <h2>RealTime Database</h2>
+          <input
+            type="text"
+            placeholder="name"
+            value={message.name}
+            onChange={handleNameChange}
+          />
+          <input
+            type="text"
+            placeholder="text"
+            value={message.text}
+            onChange={handleTextChange}
+          />
+          <button onClick={handleClick}>投稿</button>
+          {messages
+            ? messages.map(
+                (data: { key: string; name: string; text: string }) => (
+                  <div key={data.key}>
+                    {data.name}:{data.text}
+                  </div>
+                )
+              )
+            : null}
+        </div>
+        <div>
+          <h2>RealTime Database</h2>
+          <input
+            type="text"
+            placeholder="name"
+            value={message.name}
+            onChange={handleNameChange}
+          />
+          <input
+            type="text"
+            placeholder="text"
+            value={message.text}
+            onChange={handleTextChange}
+          />
+          <button onClick={handleClick}>投稿</button>
+          {messages
+            ? messages.map(
+                (data: { key: string; name: string; text: string }) => (
+                  <div key={data.key}>
+                    {data.name}:{data.text}
+                  </div>
+                )
+              )
+            : null}
+        </div>
+      </div>
     </>
   )
 })
