@@ -1,6 +1,13 @@
 # typescript-react-firebase
 
-firebase v9 の認証(メール＆パスワード、GitHub、Twitter、Google),RealTime Databa,Firestore のサンプル
+firebase v9 のサンプル
+
+- Authentication(メール＆パスワード、GitHub、Twitter、Google)
+  - ./src/firebase/auth
+- RealTime Databa
+  - ./src/firebase/realtime-database
+- Firestore
+  - ./src/firebase/firestore
 
 ## SetUp
 
