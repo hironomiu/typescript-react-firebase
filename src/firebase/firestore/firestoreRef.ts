@@ -3,6 +3,7 @@ import { getFirestore, collection, addDoc } from 'firebase/firestore'
 
 export const firestore = getFirestore(firebaseApp)
 
+// TODO 別ファイルに書き出す
 export const test = async () => {
   try {
     const docRef = await addDoc(collection(firestore, 'messages'), {
