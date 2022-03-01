@@ -15,6 +15,7 @@ const Twitter: React.FC<{
       console.log(res)
       if (res.displayName) {
         const email = res.email ? res.email : ''
+        // TODO 共通化
         setUser({ ...user, nickname: res.displayName, email: email })
         setIsLogin(true)
       }

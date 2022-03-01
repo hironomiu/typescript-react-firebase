@@ -78,8 +78,15 @@ export const useMain = () => {
     // TODO 外に出す
     setIsloading(true)
     const auth = getAuth()
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
+    onAuthStateChanged(auth, (userData) => {
+      if (userData) {
+        if (userData.displayName && userData.email)
+          // TODO 共通化
+          setUser({
+            ...user,
+            nickname: userData.displayName,
+            email: userData.email,
+          })
         setIsLogin(true)
       } else {
         setIsLogin(false)
