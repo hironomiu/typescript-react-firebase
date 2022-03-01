@@ -6,17 +6,7 @@ import { dataPush } from '../firebase/realtime-database/dataPush'
 // import { dataRef } from '../firebase/realtime-database/dataRef'
 import { queryRef } from '../firebase/realtime-database/query'
 import { test } from '../firebase/firestore/firestoreRef'
-
-type Message = {
-  key: string
-  name: string
-  text: string
-}
-
-type User = {
-  nickname: string
-  email: string
-}
+import { User, Message } from '../types'
 
 export const useMain = () => {
   const [messages, setMessages] = useState<Message[]>()
@@ -94,6 +84,7 @@ export const useMain = () => {
   const handleClick = () => {
     dataPush({ refName: 'messages', ...message })
   }
+
   return {
     handleNameChange,
     handleTextChange,
