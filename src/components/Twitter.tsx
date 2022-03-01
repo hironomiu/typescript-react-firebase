@@ -12,7 +12,6 @@ const Twitter: React.FC<{
   const handleOnClick = useCallback(
     async (provider: TwitterAuthProvider) => {
       const res = await socialMediaAuth(provider)
-      console.log(res)
       if (res.displayName) {
         const email = res.email ? res.email : ''
         // TODO 共通化

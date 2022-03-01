@@ -7,7 +7,6 @@ const Google: React.FC<{ setIsLogin: Dispatch<SetStateAction<boolean>> }> =
   memo(({ setIsLogin }) => {
     const handleClick = async (googleAuthProvider: GoogleAuthProvider) => {
       const res = await socialMediaAuth(googleAuthProvider)
-      // TODO displayname取得
       console.log(res)
       setIsLogin(true)
     }

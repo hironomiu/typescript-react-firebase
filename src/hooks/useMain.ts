@@ -80,20 +80,23 @@ export const useMain = () => {
     const auth = getAuth()
     onAuthStateChanged(auth, (userData) => {
       if (userData) {
-        if (userData.displayName && userData.email)
+        if (userData.displayName) {
+          const email = userData.email ? userData.email : ''
           // TODO 共通化
           setUser({
             ...user,
             nickname: userData.displayName,
-            email: userData.email,
+            email: email,
           })
+        }
         setIsLogin(true)
       } else {
         setIsLogin(false)
       }
       setIsloading(false)
     })
-  }, [setIsloading, setIsLogin])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMessage({ ...message, name: e.target.value })
