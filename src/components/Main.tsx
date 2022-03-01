@@ -42,7 +42,7 @@ const Main: FC = memo(() => {
       </h1>
 
       <div style={{ display: 'flex' }}>
-        <div>
+        <div style={{ margin: '10px' }}>
           <h2>RealTime Database</h2>
           <input
             type="text"
@@ -67,7 +67,7 @@ const Main: FC = memo(() => {
               )
             : null}
         </div>
-        <div>
+        <div style={{ margin: '10px' }}>
           <h2>Firestore</h2>
           <input
             type="text"
