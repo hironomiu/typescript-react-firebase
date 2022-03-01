@@ -16,6 +16,8 @@ const Main: FC = memo(() => {
     isLoading,
     isLogin,
     setIsLogin,
+    user,
+    setUser,
   } = useMain()
 
   if (isLoading) return <>Loaging...</>
@@ -23,7 +25,7 @@ const Main: FC = memo(() => {
   if (!isLogin) {
     return (
       <>
-        <Twitter setIsLogin={setIsLogin} />
+        <Twitter setIsLogin={setIsLogin} user={user} setUser={setUser} />
         <GitHub setIsLogin={setIsLogin} />
         <Google setIsLogin={setIsLogin} />
         <Email setIsLogin={setIsLogin} />
@@ -34,7 +36,8 @@ const Main: FC = memo(() => {
   return (
     <>
       <h1>
-        Logged in <button onClick={firebaeSignOut}>Logout?</button>
+        {user.nickname} is Logged in{' '}
+        <button onClick={firebaeSignOut}>Logout?</button>
       </h1>
 
       <div style={{ display: 'flex' }}>

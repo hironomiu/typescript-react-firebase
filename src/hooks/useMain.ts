@@ -13,6 +13,11 @@ type Message = {
   text: string
 }
 
+type User = {
+  nickname: string
+  email: string
+}
+
 export const useMain = () => {
   const [messages, setMessages] = useState<Message[]>()
 
@@ -23,6 +28,7 @@ export const useMain = () => {
   })
   const [isLoading, setIsloading] = useState<boolean>(false)
   const [isLogin, setIsLogin] = useState<boolean>(false)
+  const [user, setUser] = useState<User>({ nickname: '', email: '' })
 
   const firebaeSignOut = useCallback(async () => {
     await signOut()
@@ -99,5 +105,7 @@ export const useMain = () => {
     setIsloading,
     isLogin,
     setIsLogin,
+    user,
+    setUser,
   }
 }
