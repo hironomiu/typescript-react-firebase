@@ -18,6 +18,7 @@ const Main: FC = memo(() => {
     setIsLogin,
     user,
     setUser,
+    firestoreMessages,
   } = useMain()
 
   if (isLoading) return <>Loaging...</>
@@ -67,7 +68,7 @@ const Main: FC = memo(() => {
             : null}
         </div>
         <div>
-          <h2>RealTime Database</h2>
+          <h2>Firestore</h2>
           <input
             type="text"
             placeholder="name"
@@ -81,8 +82,8 @@ const Main: FC = memo(() => {
             onChange={handleTextChange}
           />
           <button onClick={handleClick}>投稿</button>
-          {messages
-            ? messages.map(
+          {firestoreMessages
+            ? firestoreMessages.map(
                 (data: { key: string; name: string; text: string }) => (
                   <div key={data.key}>
                     {data.name}:{data.text}

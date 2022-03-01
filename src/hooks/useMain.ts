@@ -5,7 +5,8 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { dataPush } from '../firebase/realtime-database/dataPush'
 // import { dataRef } from '../firebase/realtime-database/dataRef'
 import { queryRef } from '../firebase/realtime-database/query'
-import { test } from '../firebase/firestore/firestoreRef'
+import { firestoreAddDoc } from '../firebase/firestore/firestoreAddDoc'
+import { firestoreGetDoc } from '../firebase/firestore/firestoreGet'
 import { User, Message } from '../types'
 
 export const useMain = () => {
@@ -16,6 +17,7 @@ export const useMain = () => {
     name: '',
     text: '',
   })
+  const [firestoreMessages, setFirestoreMessages] = useState<Message[]>()
   const [isLoading, setIsloading] = useState<boolean>(false)
   const [isLogin, setIsLogin] = useState<boolean>(false)
   const [user, setUser] = useState<User>({ nickname: '', email: '' })
@@ -25,9 +27,20 @@ export const useMain = () => {
     setIsLogin(false)
   }, [])
 
+  // TODO データ投稿時の再取得
   useEffect(() => {
-    test()
+    ;(async () => {
+      const docSnap = await firestoreGetDoc()
+
+      const data = docSnap.docs.map((doc) => {
+        const data = doc.data()
+        return { key: doc.id, name: data.name, text: data.text }
+      })
+
+      setFirestoreMessages([...data])
+    })()
   }, [])
+
   useEffect(() => {
     setIsloading(true)
     onValue(queryRef('messages'), (snapshot) => {
@@ -83,6 +96,7 @@ export const useMain = () => {
   }
   const handleClick = () => {
     dataPush({ refName: 'messages', ...message })
+    firestoreAddDoc({ refName: 'messages', ...message })
   }
 
   return {
@@ -98,5 +112,7 @@ export const useMain = () => {
     setIsLogin,
     user,
     setUser,
+    firestoreMessages,
+    setFirestoreMessages,
   }
 }
