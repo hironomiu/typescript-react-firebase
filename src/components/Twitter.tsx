@@ -14,7 +14,6 @@ const Twitter: React.FC<{
       const res = await socialMediaAuth(provider)
       console.log(res)
       if (res.displayName) {
-        console.log(res)
         const email = res.email ? res.email : ''
         setUser({ ...user, nickname: res.displayName, email: email })
         setIsLogin(true)

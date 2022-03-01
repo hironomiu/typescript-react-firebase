@@ -26,7 +26,7 @@ const Main: FC = memo(() => {
     return (
       <>
         <Twitter setIsLogin={setIsLogin} user={user} setUser={setUser} />
-        <GitHub setIsLogin={setIsLogin} />
+        <GitHub setIsLogin={setIsLogin} user={user} setUser={setUser} />
         <Google setIsLogin={setIsLogin} />
         <Email setIsLogin={setIsLogin} />
       </>
