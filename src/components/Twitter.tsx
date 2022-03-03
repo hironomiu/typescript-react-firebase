@@ -12,14 +12,15 @@ const Twitter: React.FC<{
   const handleOnClick = useCallback(
     async (provider: TwitterAuthProvider) => {
       const res = await socialMediaAuth(provider)
-      if (res.displayName) {
-        const email = res.email ? res.email : ''
+      if (res) {
+        // const email = res.email ? res.email : ''
         // TODO 共通化
-        setUser({ ...user, nickname: res.displayName, email: email })
+        // setUser({ ...user, nickname: res.displayName, email: email })
         setIsLogin(true)
       }
     },
-    [user, setUser, setIsLogin]
+    // [user, setUser, setIsLogin]
+    [setIsLogin]
   )
 
   return (
