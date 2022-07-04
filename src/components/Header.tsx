@@ -1,6 +1,16 @@
 import { Link } from 'react-router-dom'
+import { useSetRecoilState } from 'recoil'
+import { isLoginState } from '../recoil'
+import { signOut } from '../firebase/auth/signOut'
 
 const Header = () => {
+  const setIsLogin = useSetRecoilState(isLoginState)
+
+  const firebaeSignOut = async () => {
+    await signOut()
+    setIsLogin(false)
+  }
+
   return (
     <header className="flex items-center h-12 border-b-[1px] shadow-md justify-between">
       <div className="flex ml-8">
@@ -21,9 +31,9 @@ const Header = () => {
         </nav>
       </div>
       <div className="mr-8">
-        <Link to="/firestore" className="mx-2">
+        <button className="mx-2" onClick={firebaeSignOut}>
           SignOut
-        </Link>
+        </button>
       </div>
     </header>
   )
