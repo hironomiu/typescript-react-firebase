@@ -6,7 +6,7 @@ import { signOut } from '../firebase/auth/signOut'
 import RealTimeDatabase from './RealTimeDatabase'
 import Firestore from './Firestore'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
-
+import { Outlet } from 'react-router-dom'
 const Main = memo(() => {
   const setIsLogin = useSetRecoilState(isLoginState)
   const isLogin = useRecoilValue(isLoginState)
@@ -46,14 +46,13 @@ const Main = memo(() => {
   }, [setIsLogin, setUser])
 
   return (
-    <main className="flex flex-col justify-center items-center">
+    <main className="flex flex-col justify-center items-center mt-8">
       <h1>
         {user.nickname} is Logged in
         <button onClick={firebaeSignOut}>Logout?</button>
       </h1>
       <div className="flex">
-        <RealTimeDatabase />
-        <Firestore />
+        <Outlet />
       </div>
     </main>
   )
