@@ -3,10 +3,15 @@ export type User = {
   email: string
 }
 
-export type Message = {
+export type displayMessage = {
   key: string
   name: string
   text: string
 }
 
-export type RealTimeDatabaseEntries = [string, { name: string; text: string }]
+export type Message = displayMessage & {
+  createdAt?: number
+  updatedAt?: number
+}
+
+export type RealTimeDatabaseEntries = [string, Message]

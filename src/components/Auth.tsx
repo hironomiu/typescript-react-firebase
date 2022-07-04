@@ -19,7 +19,7 @@ const Auth = () => {
   return (
     <main className="flex flex-col justify-center items-center mt-8">
       <EmailPassword />
-      <div className="flex flex-col border-2 items-center mt-14 w-96 h-32 rounded">
+      <div className="flex flex-col border-[1px] items-center mt-14 w-96 h-32 rounded">
         <h1 className="my-2">Sosial SigIn & SignUp</h1>
         <div className="flex my-2">
           <Twitter />

@@ -5,7 +5,7 @@ firebase v9 のサンプル
 - Authentication(メール＆パスワード、GitHub、Twitter、Google)
   - ./src/firebase/auth
 - RealTime Databa
-  - ./src/firebase/realtime-database
+  - ./src/firebase/realtimeDatabase
 - Firestore
   - ./src/firebase/firestore
 

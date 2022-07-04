@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { Message } from '../types'
 import { firestoreAddDoc } from '../firebase/firestore/firestoreAddDoc'
 import { firestoreGetDoc } from '../firebase/firestore/firestoreGet'
+import Button from './parts/Button'
 
 const Firestore = () => {
   const mountedRef = useRef(true)
@@ -62,12 +63,7 @@ const Firestore = () => {
             onChange={handleTextChange}
             className="border-[1px] px-2 py-1 mr-1"
           />
-          <button
-            onClick={handleClick}
-            className="bg-blue-400 w-28 h-8 ml-2 rounded text-white"
-          >
-            投稿
-          </button>
+          <Button onClick={handleClick}>投稿</Button>
         </div>
         {firestoreMessages
           ? firestoreMessages.map(

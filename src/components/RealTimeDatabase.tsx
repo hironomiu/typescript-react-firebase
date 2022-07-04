@@ -1,27 +1,30 @@
-import { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { dataPush } from '../firebase/realtimeDatabase/dataPush'
 import { queryRef } from '../firebase/realtimeDatabase/query'
 import { Message, RealTimeDatabaseEntries } from '../types'
 import { onValue } from 'firebase/database'
+import Button from './parts/Button'
+import { formatDate } from '../lib'
 
 const RealTimeDatabase = () => {
   const mountedRef = useRef(true)
-  const [messages, setMessages] = useState<Message[]>()
+  const [messages, setMessages] = useState<Message[]>([])
   const [message, setMessage] = useState<Message>({
     key: '',
     name: '',
     text: '',
   })
 
-  const getData = (name: string) => {
-    onValue(queryRef(name), (snapshot) => {
+  const getData = (refName: string) => {
+    onValue(queryRef(refName), (snapshot) => {
       const data = snapshot.val()
       if (!data) return
       const entries: RealTimeDatabaseEntries[] = Object.entries(data)
       const newData: Message[] = entries.map(
         (entry: RealTimeDatabaseEntries) => {
           const [key, message] = entry
-          return { key, ...message }
+          console.log(key, message)
+          return { ...message, key }
         }
       )
       // MEMO: cleanup用
@@ -65,21 +68,16 @@ const RealTimeDatabase = () => {
           onChange={handleTextChange}
           className="border-[1px] px-2 py-1 mr-1"
         />
-        <button
-          onClick={handleClick}
-          className="bg-blue-400 w-28 h-8 ml-2 rounded text-white"
-        >
-          投稿
-        </button>
+        <Button onClick={handleClick}>投稿</Button>
       </div>
 
-      {messages
-        ? messages.map((data: { key: string; name: string; text: string }) => (
-            <div key={data.key}>
-              {data.name}:{data.text}
-            </div>
-          ))
-        : null}
+      {messages.map((data: Message) => (
+        <div key={data.key}>
+          {data.name}:{data.text}:
+          {data.createdAt ? formatDate(new Date(data.createdAt)) : null}:
+          {data.updatedAt ? formatDate(new Date(data.updatedAt)) : null}
+        </div>
+      ))}
     </div>
   )
 }
