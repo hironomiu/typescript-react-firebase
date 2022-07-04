@@ -2,19 +2,29 @@ import { Link } from 'react-router-dom'
 
 const Header = () => {
   return (
-    <header className="flex items-center h-12 border-b-[1px] shadow-md">
-      <div>Header</div>
-      <nav className="ml-4">
-        <Link to="/" className="mx-2">
-          Home
-        </Link>
-        <Link to="/realtimedatabase" className="mx-2">
-          RealTimeDatabase
-        </Link>
+    <header className="flex items-center h-12 border-b-[1px] shadow-md justify-between">
+      <div className="flex ml-8">
+        <div>
+          <Link to="/" className="">
+            Home
+          </Link>
+        </div>
+        <nav className="flex ml-4 justify-between">
+          <div>
+            <Link to="/realtimedatabase" className="mx-2">
+              RealTimeDatabase
+            </Link>
+            <Link to="/firestore" className="mx-2">
+              Firestore
+            </Link>
+          </div>
+        </nav>
+      </div>
+      <div className="mr-8">
         <Link to="/firestore" className="mx-2">
-          Firestore
+          SignOut
         </Link>
-      </nav>
+      </div>
     </header>
   )
 }
