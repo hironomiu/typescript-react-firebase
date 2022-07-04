@@ -1,21 +1,33 @@
-import React, { Dispatch, SetStateAction, memo } from 'react'
+import { memo } from 'react'
 import { GoogleAuthProvider } from 'firebase/auth'
 import { googleAuthProvider } from '../firebase/auth/googleAuthProvider'
 import { socialMediaAuth } from '../firebase/auth/socialMediaAuth'
+import { useSetRecoilState } from 'recoil'
+import { isLoginState } from '../recoil'
 
-const Google: React.FC<{ setIsLogin: Dispatch<SetStateAction<boolean>> }> =
-  memo(({ setIsLogin }) => {
-    const handleClick = async (googleAuthProvider: GoogleAuthProvider) => {
-      const res = await socialMediaAuth(googleAuthProvider)
+const Google = memo(() => {
+  const setIsLogin = useSetRecoilState(isLoginState)
+  const handleSocialMediaAuthClick = async <T extends GoogleAuthProvider>(
+    provider: T
+  ) => {
+    const res = await socialMediaAuth(provider)
+    if (res) {
       console.log(res)
       setIsLogin(true)
     }
-    return (
-      <div id="google-auth">
-        <span>Google Auth</span>
-        <button onClick={() => handleClick(googleAuthProvider)}>Google</button>
-      </div>
-    )
-  })
+  }
+
+  return (
+    <div id="google-auth" className="flex items-center my-2">
+      <span>Google Auth</span>
+      <button
+        onClick={() => handleSocialMediaAuthClick(googleAuthProvider)}
+        className="bg-blue-400 w-28 h-8 ml-2 rounded text-white"
+      >
+        Google
+      </button>
+    </div>
+  )
+})
 
 export default Google

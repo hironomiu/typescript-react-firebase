@@ -1,31 +1,18 @@
-import { Dispatch, SetStateAction, memo, useCallback } from 'react'
-import { GithubAuthProvider } from 'firebase/auth'
-import { socialMediaAuth } from '../firebase/auth/socialMediaAuth'
+import { memo } from 'react'
 import { githubAuthProvider } from '../firebase/auth/githubAuthProvider'
-import { User } from '../types'
+import { useGlobal } from '../hooks/useGlobal'
 
-const GitHub: React.FC<{
-  setIsLogin: Dispatch<SetStateAction<boolean>>
-  user: User
-  setUser: React.Dispatch<React.SetStateAction<User>>
-}> = memo(({ setIsLogin, user, setUser }) => {
-  const handleOnClick = useCallback(
-    async (provider: GithubAuthProvider) => {
-      const res = await socialMediaAuth(provider)
-      console.log(res)
-      if (res.displayName) {
-        const email = res.email ? res.email : ''
-        // TODO 共通化
-        setUser({ ...user, nickname: res.displayName, email: email })
-        setIsLogin(true)
-      }
-    },
-    [user, setUser, setIsLogin]
-  )
+const GitHub = memo(() => {
+  const { handleSocialMediaAuthClick } = useGlobal()
   return (
-    <div id="github-auth">
+    <div id="github-auth" className="flex items-center my-2">
       <span>GitHub Auth</span>
-      <button onClick={() => handleOnClick(githubAuthProvider)}>GitHub</button>
+      <button
+        onClick={() => handleSocialMediaAuthClick(githubAuthProvider)}
+        className="bg-blue-400 w-28 h-8 ml-2 rounded text-white"
+      >
+        GitHub
+      </button>
     </div>
   )
 })

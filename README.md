@@ -71,9 +71,22 @@ Firebase -> Authentication -> Sign-in method -> 新しいプロバイダを追�
 
 ```
 npx create-react-app . --template typescript
+npm install react-router-dom
 ```
+
+### Firebase
 
 ```
 npm install firebase
 npm install --save-dev @types/firebase
+```
+
+### Tailwind
+
+[Install Tailwind CSS with Create React App](https://tailwindcss.com/docs/guides/create-react-app)
+
+### Recoil
+
+```
+npm install recoil
 ```

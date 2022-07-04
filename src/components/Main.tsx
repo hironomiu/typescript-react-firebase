@@ -1,48 +1,48 @@
-import { FC, memo } from 'react'
-import Twitter from './Twitter'
-import GitHub from './GitHub'
-import Google from './Google'
-import Email from './EmailPassword'
+import { memo, useEffect } from 'react'
 import { useMain } from '../hooks/useMain'
+import { useNavigate } from 'react-router-dom'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { isLoginState, userState } from '../recoil'
+import { signOut } from '../firebase/auth/signOut'
 
-const Main: FC = memo(() => {
+const Main = memo(() => {
+  const setIsLogin = useSetRecoilState(isLoginState)
+  const isLogin = useRecoilValue(isLoginState)
+  const user = useRecoilValue(userState)
+  const navigate = useNavigate()
+
   const {
     handleNameChange,
     handleTextChange,
     handleClick,
-    firebaeSignOut,
     message,
     messages,
     isLoading,
-    isLogin,
-    setIsLogin,
-    user,
-    setUser,
     firestoreMessages,
   } = useMain()
 
-  if (isLoading) return <>Loaging...</>
-
-  if (!isLogin) {
-    return (
-      <>
-        <Twitter setIsLogin={setIsLogin} user={user} setUser={setUser} />
-        <GitHub setIsLogin={setIsLogin} user={user} setUser={setUser} />
-        <Google setIsLogin={setIsLogin} />
-        <Email setIsLogin={setIsLogin} />
-      </>
-    )
+  const firebaeSignOut = async () => {
+    await signOut()
+    setIsLogin(false)
   }
 
+  useEffect(() => {
+    if (!isLogin) {
+      navigate('/auth')
+    }
+  }, [navigate, isLogin])
+
+  if (isLoading) return <>Loaging...</>
+
   return (
-    <>
+    <main className="flex flex-col justify-center items-center">
       <h1>
-        {user.nickname} is Logged in{' '}
+        {user.nickname} is Logged in
         <button onClick={firebaeSignOut}>Logout?</button>
       </h1>
 
-      <div style={{ display: 'flex' }}>
-        <div style={{ margin: '10px' }}>
+      <div>
+        <div>
           <h2>RealTime Database</h2>
           <input
             type="text"
@@ -93,7 +93,7 @@ const Main: FC = memo(() => {
             : null}
         </div>
       </div>
-    </>
+    </main>
   )
 })
 

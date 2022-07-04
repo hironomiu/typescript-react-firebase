@@ -1,17 +1,21 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import { onValue } from 'firebase/database'
-import { signOut } from '../firebase/auth/signOut'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { dataPush } from '../firebase/realtime-database/dataPush'
-// import { dataRef } from '../firebase/realtime-database/dataRef'
 import { queryRef } from '../firebase/realtime-database/query'
 import { firestoreAddDoc } from '../firebase/firestore/firestoreAddDoc'
 import { firestoreGetDoc } from '../firebase/firestore/firestoreGet'
-import { User, Message } from '../types'
+import { Message } from '../types'
+
+import { useSetRecoilState, useRecoilValue } from 'recoil'
+import { isLoginState, userState } from '../recoil'
 
 export const useMain = () => {
-  const [messages, setMessages] = useState<Message[]>()
+  const setIsLogin = useSetRecoilState(isLoginState)
+  const setUser = useSetRecoilState(userState)
+  const user = useRecoilValue(userState)
 
+  const [messages, setMessages] = useState<Message[]>()
   const [message, setMessage] = useState<Message>({
     key: '',
     name: '',
@@ -19,13 +23,6 @@ export const useMain = () => {
   })
   const [firestoreMessages, setFirestoreMessages] = useState<Message[]>()
   const [isLoading, setIsloading] = useState<boolean>(false)
-  const [isLogin, setIsLogin] = useState<boolean>(false)
-  const [user, setUser] = useState<User>({ nickname: '', email: '' })
-
-  const firebaeSignOut = useCallback(async () => {
-    await signOut()
-    setIsLogin(false)
-  }, [])
 
   // TODO データ投稿時の再取得
   useEffect(() => {
@@ -56,23 +53,6 @@ export const useMain = () => {
       setIsloading(false)
     })
   }, [setMessages])
-
-  // TODO ./firebase/realtime-database配下にライブラリとして配置可能なものは移動する
-  // useEffect(() => {
-  //   setIsloading(true)
-  //   onValue(dataRef('messages'), (snapshot) => {
-  //     const data = snapshot.val()
-  //     if (!data) return
-  //     const entries = Object.entries(data)
-  //     // TODO 型
-  //     const newData: Message[] = entries.map((entry: any) => {
-  //       const [key, message] = entry
-  //       return { key, ...message }
-  //     })
-  //     setMessages(newData)
-  //     setIsloading(false)
-  //   })
-  // }, [setMessages])
 
   useEffect(() => {
     // TODO 外に出す
@@ -113,15 +93,10 @@ export const useMain = () => {
     handleNameChange,
     handleTextChange,
     handleClick,
-    firebaeSignOut,
     message,
     messages,
     isLoading,
     setIsloading,
-    isLogin,
-    setIsLogin,
-    user,
-    setUser,
     firestoreMessages,
     setFirestoreMessages,
   }

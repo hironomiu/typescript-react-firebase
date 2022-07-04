@@ -1,32 +1,16 @@
-import { Dispatch, SetStateAction, memo, useCallback } from 'react'
-import { TwitterAuthProvider } from 'firebase/auth'
+import { memo } from 'react'
 import { twitterAuthProvider } from '../firebase/auth/twitterAuthProvider'
-import { socialMediaAuth } from '../firebase/auth/socialMediaAuth'
-import { User } from '../types'
+import { useGlobal } from '../hooks/useGlobal'
 
-const Twitter: React.FC<{
-  setIsLogin: Dispatch<SetStateAction<boolean>>
-  user: User
-  setUser: React.Dispatch<React.SetStateAction<User>>
-}> = memo(({ setIsLogin, user, setUser }) => {
-  const handleOnClick = useCallback(
-    async (provider: TwitterAuthProvider) => {
-      const res = await socialMediaAuth(provider)
-      if (res) {
-        // const email = res.email ? res.email : ''
-        // TODO 共通化
-        // setUser({ ...user, nickname: res.displayName, email: email })
-        setIsLogin(true)
-      }
-    },
-    // [user, setUser, setIsLogin]
-    [setIsLogin]
-  )
-
+const Twitter = memo(() => {
+  const { handleSocialMediaAuthClick } = useGlobal()
   return (
-    <div id="twitter-auth">
+    <div id="twitter-auth" className="flex items-center my-2">
       <span>Twitter Auth</span>
-      <button onClick={() => handleOnClick(twitterAuthProvider)}>
+      <button
+        onClick={() => handleSocialMediaAuthClick(twitterAuthProvider)}
+        className="bg-blue-400 w-28 h-8 ml-2 rounded text-white"
+      >
         Twitter Auth
       </button>
     </div>
