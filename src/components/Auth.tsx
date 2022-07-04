@@ -17,11 +17,13 @@ const Auth = () => {
   }, [navigate, isLogin])
 
   return (
-    <main>
-      <Twitter />
-      <GitHub />
-      <Google />
-      <EmailPassword />
+    <main className="flex justify-center items-center">
+      <div>
+        <Twitter />
+        <GitHub />
+        <Google />
+        <EmailPassword />
+      </div>
     </main>
   )
 }

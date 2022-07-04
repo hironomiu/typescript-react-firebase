@@ -1,6 +1,6 @@
 import { memo, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilValue } from 'recoil'
 import { isLoginState, userState } from '../recoil'
 import { Outlet } from 'react-router-dom'
 const Main = memo(() => {
