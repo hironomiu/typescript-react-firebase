@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { dataPush } from '../firebase/realtimeDatabase/dataPush'
 import { queryRef } from '../firebase/realtimeDatabase/query'
-import { Message } from '../types'
+import { Message, RealTimeDatabaseEntries } from '../types'
 import { onValue } from 'firebase/database'
 
 const RealTimeDatabase = () => {
@@ -17,10 +17,9 @@ const RealTimeDatabase = () => {
     onValue(queryRef(name), (snapshot) => {
       const data = snapshot.val()
       if (!data) return
-      const entries: [string, { name: string; text: string }][] =
-        Object.entries(data)
+      const entries: RealTimeDatabaseEntries[] = Object.entries(data)
       const newData: Message[] = entries.map(
-        (entry: [string, { name: string; text: string }]) => {
+        (entry: RealTimeDatabaseEntries) => {
           const [key, message] = entry
           return { key, ...message }
         }
@@ -36,7 +35,7 @@ const RealTimeDatabase = () => {
     return () => {
       mountedRef.current = false
     }
-  }, [setMessages])
+  }, [])
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMessage({ ...message, name: e.target.value })
@@ -44,7 +43,9 @@ const RealTimeDatabase = () => {
   const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMessage({ ...message, text: e.target.value })
   }
-  const handleClick = () => dataPush({ refName: 'messages', ...message })
+  const handleClick = () => {
+    dataPush({ refName: 'messages', ...message })
+  }
 
   return (
     <div className="flex flex-col m-2">

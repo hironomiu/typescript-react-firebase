@@ -2,6 +2,8 @@ import { useState, memo } from 'react'
 import { emailPasswordAuth } from '../firebase/auth/emailPasswordAuth'
 import { useSetRecoilState } from 'recoil'
 import { isLoginState } from '../recoil'
+import Button from './parts/Button'
+
 const EmailPassword = memo(() => {
   const setIsLogin = useSetRecoilState(isLoginState)
   const [user, setUser] = useState({ email: '', password: '' })
@@ -27,7 +29,7 @@ const EmailPassword = memo(() => {
         type="email"
         onChange={(e) => setUserEmail(e)}
         placeholder="email"
-        className=" border-[1px] px-2 py-1 w-60"
+        className=" border-[1px] mx-2 px-2 py-1 w-60"
       />
       <input
         type="password"
@@ -35,12 +37,7 @@ const EmailPassword = memo(() => {
         placeholder="password"
         className=" border-[1px] px-2 py-1 w-60"
       />
-      <button
-        onClick={async () => handleOnClick()}
-        className="bg-blue-400 w-28 h-8 ml-2 rounded text-white"
-      >
-        SignIn
-      </button>
+      <Button onClick={async () => handleOnClick()}>SignIn</Button>
     </div>
   )
 })

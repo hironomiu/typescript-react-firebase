@@ -17,7 +17,7 @@ const Auth = () => {
   }, [navigate, isLogin])
 
   return (
-    <main className="flex justify-center items-center">
+    <main className="flex justify-center items-center mt-8">
       <div>
         <Twitter />
         <GitHub />

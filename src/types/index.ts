@@ -8,3 +8,5 @@ export type Message = {
   name: string
   text: string
 }
+
+export type RealTimeDatabaseEntries = [string, { name: string; text: string }]
