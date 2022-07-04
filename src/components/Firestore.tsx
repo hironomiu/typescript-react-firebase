@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react'
-
+import { useState, useEffect, useRef } from 'react'
 import { Message } from '../types'
 import { firestoreAddDoc } from '../firebase/firestore/firestoreAddDoc'
 import { firestoreGetDoc } from '../firebase/firestore/firestoreGet'
 
 const Firestore = () => {
+  const mountedRef = useRef(true)
   const [message, setMessage] = useState<Message>({
     key: '',
     name: '',
@@ -13,18 +13,23 @@ const Firestore = () => {
 
   const [firestoreMessages, setFirestoreMessages] = useState<Message[]>()
 
-  useEffect(() => {
-    const fetchFirestore = async () => {
-      const docSnap = await firestoreGetDoc()
+  const fetchFirestore = async () => {
+    const docSnap = await firestoreGetDoc()
 
-      const data = docSnap.docs.map((doc) => {
-        const data = doc.data()
-        return { key: doc.id, name: data.name, text: data.text }
-      })
-      console.log(data)
-      setFirestoreMessages([...data])
-    }
+    const data = docSnap.docs.map((doc) => {
+      const data = doc.data()
+      return { key: doc.id, name: data.name, text: data.text }
+    })
+    // MEMO: cleanup用
+    if (!mountedRef.current) return null
+    setFirestoreMessages([...data])
+  }
+
+  useEffect(() => {
     fetchFirestore()
+    return () => {
+      mountedRef.current = false
+    }
   }, [])
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,7 +40,9 @@ const Firestore = () => {
   }
   const handleClick = () => {
     firestoreAddDoc({ refName: 'messages', ...message })
+    fetchFirestore()
   }
+
   return (
     <div>
       <div className="flex flex-col m-2">

@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { dataPush } from '../firebase/realtime-database/dataPush'
 import { Message } from '../types'
 import { onValue } from 'firebase/database'
 import { queryRef } from '../firebase/realtime-database/query'
 
 const RealTimeDatabase = () => {
+  const mountedRef = useRef(true)
   const [messages, setMessages] = useState<Message[]>()
   const [message, setMessage] = useState<Message>({
     key: '',
@@ -16,14 +17,21 @@ const RealTimeDatabase = () => {
     onValue(queryRef('messages'), (snapshot) => {
       const data = snapshot.val()
       if (!data) return
-      const entries = Object.entries(data)
-      // TODO 型
-      const newData: Message[] = entries.map((entry: [string, any]) => {
-        const [key, message] = entry
-        return { key, ...message }
-      })
+      const entries: [string, { name: string; text: string }][] =
+        Object.entries(data)
+      const newData: Message[] = entries.map(
+        (entry: [string, { name: string; text: string }]) => {
+          const [key, message] = entry
+          return { key, ...message }
+        }
+      )
+      // MEMO: cleanup用
+      if (!mountedRef.current) return null
       setMessages(newData)
     })
+    return () => {
+      mountedRef.current = false
+    }
   }, [setMessages])
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMessage({ ...message, name: e.target.value })
