@@ -1,21 +1,8 @@
 import { memo } from 'react'
-import { GoogleAuthProvider } from 'firebase/auth'
 import { googleAuthProvider } from '../firebase/auth/googleAuthProvider'
-import { socialMediaAuth } from '../firebase/auth/socialMediaAuth'
-import { useSetRecoilState } from 'recoil'
-import { isLoginState } from '../recoil'
-
+import { useGlobal } from '../hooks/useGlobal'
 const Google = memo(() => {
-  const setIsLogin = useSetRecoilState(isLoginState)
-  const handleSocialMediaAuthClick = async <T extends GoogleAuthProvider>(
-    provider: T
-  ) => {
-    const res = await socialMediaAuth(provider)
-    if (res) {
-      console.log(res)
-      setIsLogin(true)
-    }
-  }
+  const { handleSocialMediaAuthClick } = useGlobal()
 
   return (
     <div id="google-auth" className="flex items-center my-2">

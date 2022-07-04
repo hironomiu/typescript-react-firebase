@@ -1,5 +1,11 @@
 import { useCallback } from 'react'
-import { GithubAuthProvider, TwitterAuthProvider } from 'firebase/auth'
+import {
+  GoogleAuthProvider,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  GithubAuthProvider,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  TwitterAuthProvider,
+} from 'firebase/auth'
 import { useSetRecoilState } from 'recoil'
 import { isLoginState, userState } from '../recoil'
 import { socialMediaAuth } from '../firebase/auth/socialMediaAuth'
@@ -8,7 +14,15 @@ export const useGlobal = () => {
   const setIsLogin = useSetRecoilState(isLoginState)
   const setUser = useSetRecoilState(userState)
   const handleSocialMediaAuthClick = useCallback(
-    async <T extends GithubAuthProvider, TwitterAuthProvider>(provider: T) => {
+    async <
+      T extends GoogleAuthProvider,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      GithubAuthProvider,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      TwitterAuthProvider
+    >(
+      provider: T
+    ) => {
       const res = await socialMediaAuth(provider)
       console.log(res)
       if (res) {
