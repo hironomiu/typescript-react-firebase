@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import Twitter from '../components/Twitter'
+import Twitter from '../components/Auth/Twitter'
 
 describe('Twitter', () => {
   it('test', () => {

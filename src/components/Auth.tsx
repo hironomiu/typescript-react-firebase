@@ -1,9 +1,9 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import Twitter from './Twitter'
-import GitHub from './GitHub'
-import Google from './Google'
-import EmailPassword from './EmailPassword'
+import Twitter from './Auth/Twitter'
+import GitHub from './Auth/GitHub'
+import Google from './Auth/Google'
+import EmailPassword from './Auth/EmailPassword'
 import { useRecoilValue } from 'recoil'
 import { isLoginState } from '../recoil'
 const Auth = () => {
@@ -17,12 +17,15 @@ const Auth = () => {
   }, [navigate, isLogin])
 
   return (
-    <main className="flex justify-center items-center mt-8">
-      <div>
-        <Twitter />
-        <GitHub />
-        <Google />
-        <EmailPassword />
+    <main className="flex flex-col justify-center items-center mt-8">
+      <EmailPassword />
+      <div className="flex flex-col border-2 items-center mt-14 w-96 h-32 rounded">
+        <h1 className="my-2">Sosial SigIn & SignUp</h1>
+        <div className="flex my-2">
+          <Twitter />
+          <GitHub />
+          <Google />
+        </div>
       </div>
     </main>
   )

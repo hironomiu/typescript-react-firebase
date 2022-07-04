@@ -1,8 +1,8 @@
 import { useState, memo } from 'react'
-import { emailPasswordAuth } from '../firebase/auth/emailPasswordAuth'
+import { emailPasswordAuth } from '../../firebase/auth/emailPasswordAuth'
 import { useSetRecoilState } from 'recoil'
-import { isLoginState } from '../recoil'
-import Button from './parts/Button'
+import { isLoginState } from '../../recoil'
+import Button from '../parts/Button'
 
 const EmailPassword = memo(() => {
   const setIsLogin = useSetRecoilState(isLoginState)
@@ -23,19 +23,18 @@ const EmailPassword = memo(() => {
   }
 
   return (
-    <div id="email-password-auth" className="flex items-center my-2">
-      <span>Email Password Auth</span>
+    <div id="email-password-auth" className="flex flex-col items-center my-2">
       <input
         type="email"
         onChange={(e) => setUserEmail(e)}
         placeholder="email"
-        className=" border-[1px] mx-2 px-2 py-1 w-60"
+        className=" border-[1px] py-1 px-2 w-60"
       />
       <input
         type="password"
         onChange={(e) => setUserPassword(e)}
         placeholder="password"
-        className=" border-[1px] px-2 py-1 w-60"
+        className=" border-[1px] py-1 px-2 my-2 w-60"
       />
       <Button onClick={async () => handleOnClick()}>SignIn</Button>
     </div>
