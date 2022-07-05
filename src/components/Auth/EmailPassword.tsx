@@ -34,7 +34,7 @@ const EmailPassword = memo(() => {
         type="password"
         onChange={(e) => setUserPassword(e)}
         placeholder="password"
-        className=" border-[1px] py-1 px-2 my-2 w-60"
+        className=" border-[1px] py-1 px-2 mt-2 mb-4 w-60"
       />
       <Button onClick={async () => handleOnClick()}>SignIn</Button>
     </div>

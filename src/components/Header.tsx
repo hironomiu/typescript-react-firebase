@@ -17,7 +17,7 @@ const Header = () => {
       <div className="flex ml-8">
         <div>
           <Link to="/" className="">
-            Home
+            Web Service
           </Link>
         </div>
         {isLogin ? (

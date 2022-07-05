@@ -5,6 +5,7 @@ import { Message, RealTimeDatabaseEntries } from '../types'
 import { onValue } from 'firebase/database'
 import Button from './parts/Button'
 import { formatDate } from '../lib'
+import { dataRemove } from '../firebase/realtimeDatabase/dataRemove'
 
 const RealTimeDatabase = () => {
   const mountedRef = useRef(true)
@@ -18,7 +19,12 @@ const RealTimeDatabase = () => {
   const getData = (refName: string) => {
     onValue(queryRef(refName), (snapshot) => {
       const data = snapshot.val()
-      if (!data) return
+      if (!data) {
+        // MEMO: 無いと初期ロード時に怒られる
+        if (!mountedRef.current) return null
+        setMessages((prev) => (prev = []))
+        return null
+      }
       const entries: RealTimeDatabaseEntries[] = Object.entries(data)
       const newData: Message[] = entries.map(
         (entry: RealTimeDatabaseEntries) => {
@@ -50,6 +56,11 @@ const RealTimeDatabase = () => {
     dataPush({ refName: 'messages', ...message })
   }
 
+  const handleClickDelete = (key: string) => {
+    dataRemove('messages/' + key)
+    // getData('messages')
+  }
+
   return (
     <div className="flex flex-col m-2">
       <h2>RealTime Database</h2>
@@ -72,10 +83,11 @@ const RealTimeDatabase = () => {
       </div>
 
       {messages.map((data: Message) => (
-        <div key={data.key}>
+        <div key={data.key} className="h-8 my-1">
           {data.name}:{data.text}:
           {data.createdAt ? formatDate(new Date(data.createdAt)) : null}:
           {data.updatedAt ? formatDate(new Date(data.updatedAt)) : null}
+          <Button onClick={() => handleClickDelete(data.key)}>削除</Button>
         </div>
       ))}
     </div>
