@@ -29,7 +29,6 @@ const RealTimeDatabase = () => {
       const newData: Message[] = entries.map(
         (entry: RealTimeDatabaseEntries) => {
           const [key, message] = entry
-          console.log(key, message)
           return { ...message, key }
         }
       )
@@ -54,6 +53,7 @@ const RealTimeDatabase = () => {
   }
   const handleClick = () => dataPush({ refName: 'messages', ...message })
 
+  const handleClickUpdate = (key: string) => alert('messages/' + key)
   const handleClickDelete = (key: string) => dataRemove('messages/' + key)
 
   return (
@@ -82,6 +82,7 @@ const RealTimeDatabase = () => {
           {data.name}:{data.text}:
           {data.createdAt ? formatDate(new Date(data.createdAt)) : null}:
           {data.updatedAt ? formatDate(new Date(data.updatedAt)) : null}
+          <Button onClick={() => handleClickUpdate(data.key)}>更新</Button>
           <Button onClick={() => handleClickDelete(data.key)}>削除</Button>
         </div>
       ))}
