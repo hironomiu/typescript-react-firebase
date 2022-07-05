@@ -52,14 +52,9 @@ const RealTimeDatabase = () => {
   const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMessage({ ...message, text: e.target.value })
   }
-  const handleClick = () => {
-    dataPush({ refName: 'messages', ...message })
-  }
+  const handleClick = () => dataPush({ refName: 'messages', ...message })
 
-  const handleClickDelete = (key: string) => {
-    dataRemove('messages/' + key)
-    // getData('messages')
-  }
+  const handleClickDelete = (key: string) => dataRemove('messages/' + key)
 
   return (
     <div className="flex flex-col m-2">

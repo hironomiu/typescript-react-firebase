@@ -1,5 +1,5 @@
-import { ref, query, limitToLast, orderByKey } from 'firebase/database'
-import { database } from './dataRef'
+import { query, limitToLast, orderByKey } from 'firebase/database'
+import { dataRef } from './dataRef'
 
 export const queryRef = (path: string) =>
-  query(ref(database, path), limitToLast(10), orderByKey())
+  query(dataRef(path), limitToLast(10), orderByKey())

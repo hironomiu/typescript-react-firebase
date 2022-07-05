@@ -1,9 +1,6 @@
-import { database } from './dataRef'
-import { remove, ref } from 'firebase/database'
+import { dataRef } from './dataRef'
+import { remove } from 'firebase/database'
 
-export const dataRemove = (props: string) => {
-  console.log(props)
-  remove(ref(database, props))
-    .then(() => console.log('called'))
-    .catch((e) => console.log(e))
+export const dataRemove = (path: string) => {
+  remove(dataRef(path)).catch((e) => console.log(e))
 }

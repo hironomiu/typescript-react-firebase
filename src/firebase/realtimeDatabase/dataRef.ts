@@ -1,7 +1,5 @@
-import { firebaseApp } from '../initializeApp'
-import { getDatabase, ref } from 'firebase/database'
-
-export const database = getDatabase(firebaseApp)
+import { ref } from 'firebase/database'
+import { database } from './database'
 
 export const dataRef = (refName: string) => {
   return ref(database, refName)
