@@ -6,6 +6,7 @@ import { onValue } from 'firebase/database'
 import Button from './parts/Button'
 import { formatDate } from '../lib'
 import { dataRemove } from '../firebase/realtimeDatabase/dataRemove'
+import { dataUpdate } from '../firebase/realtimeDatabase/dataUpdate'
 
 const RealTimeDatabase = () => {
   const mountedRef = useRef(true)
@@ -53,7 +54,9 @@ const RealTimeDatabase = () => {
   }
   const handleClick = () => dataPush({ refName: 'messages', ...message })
 
-  const handleClickUpdate = (key: string) => alert('messages/' + key)
+  // TODO: 仮でname,textを渡してる（modalを作成し入力させる）
+  const handleClickUpdate = (key: string) =>
+    dataUpdate({ path: 'messages/' + key, name: 'hogehgoe', text: 'hogehoge' })
   const handleClickDelete = (key: string) => dataRemove('messages/' + key)
 
   return (
