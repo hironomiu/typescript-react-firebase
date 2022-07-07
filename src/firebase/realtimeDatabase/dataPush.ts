@@ -1,7 +1,13 @@
 import { dataRef } from './dataRef'
 import { push, serverTimestamp } from 'firebase/database'
 
-export const dataPush = (props: any) => {
+type Props = {
+  refName: string
+  name: string
+  text: string
+}
+
+export const dataPush = (props: Props) => {
   push(dataRef(props.refName), {
     name: props.name,
     text: props.text,

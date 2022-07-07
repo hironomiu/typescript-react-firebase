@@ -1,5 +1,5 @@
 import { dataRef } from './dataRef'
-import { update } from 'firebase/database'
+import { update, serverTimestamp } from 'firebase/database'
 
 type Props = {
   path: string
@@ -7,5 +7,9 @@ type Props = {
   text: string
 }
 export const dataUpdate = (props: Props) => {
-  update(dataRef(props.path), { name: props.name, text: props.text })
+  update(dataRef(props.path), {
+    name: props.name,
+    text: props.text,
+    updatedAt: serverTimestamp(),
+  })
 }

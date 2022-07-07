@@ -1,9 +1,9 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import Twitter from './Auth/Twitter'
-import GitHub from './Auth/GitHub'
-import Google from './Auth/Google'
-import EmailPassword from './Auth/EmailPassword'
+import Twitter from './auth/Twitter'
+import GitHub from './auth/GitHub'
+import Google from './auth/Google'
+import EmailPassword from './auth/EmailPassword'
 import { useRecoilValue } from 'recoil'
 import { isLoginState } from '../recoil'
 const Auth = () => {
