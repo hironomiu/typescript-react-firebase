@@ -8,6 +8,7 @@ import { useRecoilValue } from 'recoil'
 import { isLoginState } from '../recoil'
 const Auth = () => {
   const navigate = useNavigate()
+
   const isLogin = useRecoilValue(isLoginState)
 
   useEffect(() => {

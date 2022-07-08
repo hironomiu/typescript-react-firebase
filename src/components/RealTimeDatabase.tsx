@@ -7,6 +7,7 @@ import Button from './parts/Button'
 import { formatDate } from '../lib'
 import { dataRemove } from '../firebase/realtimeDatabase/dataRemove'
 import { dataUpdate } from '../firebase/realtimeDatabase/dataUpdate'
+import RealTimeDatabaseUpdate from './modals/RealTimeDatabaseUpdate'
 
 const RealTimeDatabase = () => {
   const mountedRef = useRef(true)
@@ -16,7 +17,14 @@ const RealTimeDatabase = () => {
     name: '',
     text: '',
   })
+  const [isRealTimeDatabaseUpdateModalOn, setIsRealTimeDatabaseUpdateModalOn] =
+    useState(false)
 
+  const [toModalMessage, setToModalMessage] = useState<Message>({
+    key: '',
+    name: '',
+    text: '',
+  })
   const getData = (refName: string) => {
     onValue(queryRef(refName), (snapshot) => {
       const data = snapshot.val()
@@ -55,8 +63,11 @@ const RealTimeDatabase = () => {
   const handleClick = () => dataPush({ refName: 'messages', ...message })
 
   // TODO: 仮でname,textを渡してる（modalを作成し入力させる）
-  const handleClickUpdate = (key: string) =>
-    dataUpdate({ path: 'messages/' + key, name: 'hogehgoe', text: 'hogehoge' })
+  const handleClickUpdate = (data: any) => {
+    console.log(data)
+    setToModalMessage({ key: data.key, name: data.name, text: data.text })
+    setIsRealTimeDatabaseUpdateModalOn(true)
+  }
   const handleClickDelete = (key: string) => dataRemove('messages/' + key)
 
   return (
@@ -85,10 +96,20 @@ const RealTimeDatabase = () => {
           {data.name}:{data.text}:
           {data.createdAt ? formatDate(new Date(data.createdAt)) : null}:
           {data.updatedAt ? formatDate(new Date(data.updatedAt)) : null}
-          <Button onClick={() => handleClickUpdate(data.key)}>更新</Button>
+          <Button onClick={() => handleClickUpdate(data)}>更新</Button>
           <Button onClick={() => handleClickDelete(data.key)}>削除</Button>
         </div>
       ))}
+      {isRealTimeDatabaseUpdateModalOn ? (
+        <RealTimeDatabaseUpdate
+          setIsRealTimeDatabaseUpdateModalOn={
+            setIsRealTimeDatabaseUpdateModalOn
+          }
+          toModalMessage={toModalMessage}
+          setToModalMessage={setToModalMessage}
+          dataUpdate={dataUpdate}
+        />
+      ) : null}
     </div>
   )
 }
