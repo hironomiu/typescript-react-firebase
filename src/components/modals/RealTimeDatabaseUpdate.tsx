@@ -24,42 +24,56 @@ const RealTimeDatabaseUpdate = (props: Props) => {
           </div>
           <div
             onKeyDown={(e) => console.log('hoge')}
-            className="text-center md:text-right mt-4 md:flex md:justify-end"
+            className="flex flex-col text-center md:text-right mt-4 md:flex md:justify-end"
           >
-            <input
-              type="text"
-              value={props.toModalMessage.name}
-              onChange={() =>
-                props.setToModalMessage((prev: any) => ({
-                  ...prev,
-                  name: 'hoge',
-                }))
-              }
-            />
-            <button
-              className="block w-full md:inline-block md:w-auto px-4 py-3 md:py-2 hover:bg-gray-400 bg-gray-200 rounded-lg font-semibold text-sm mt-4
+            <div className="flex my-2">
+              <input
+                type="text"
+                value={props.toModalMessage.name}
+                onChange={(e: any) =>
+                  props.setToModalMessage((prev: any) => ({
+                    ...prev,
+                    name: e.target.value,
+                  }))
+                }
+              />
+              <input
+                type="text"
+                value={props.toModalMessage.text}
+                onChange={(e: any) =>
+                  props.setToModalMessage((prev: any) => ({
+                    ...prev,
+                    text: e.target.value,
+                  }))
+                }
+              />
+            </div>
+            <div className="flex my-2 justify-end">
+              <button
+                className="block w-full md:inline-block md:w-auto px-4 py-3 md:py-2 hover:bg-gray-400 bg-gray-200 rounded-lg font-semibold text-sm mt-4
           md:mt-0 md:order-1 focus:shadow-outline focus:border-gray-400"
-              data-testid="card-modal-close-button"
-              onClick={() => {
-                console.log(props.dataUpdate)
-                props.dataUpdate({
-                  path: 'messages/' + props.dataUpdate.key,
-                  name: 'hogehgoe',
-                  text: 'hogehoge',
-                })
-                props.setIsRealTimeDatabaseUpdateModalOn(false)
-              }}
-            >
-              Update
-            </button>
-            <button
-              className="block w-full md:inline-block md:w-auto px-4 py-3 md:py-2 hover:bg-gray-400 bg-gray-200 rounded-lg font-semibold text-sm mt-4
+                data-testid="card-modal-close-button"
+                onClick={() => {
+                  console.log(props.toModalMessage)
+                  props.dataUpdate({
+                    path: 'messages/' + props.toModalMessage.key,
+                    name: props.toModalMessage.name,
+                    text: props.toModalMessage.text,
+                  })
+                  props.setIsRealTimeDatabaseUpdateModalOn(false)
+                }}
+              >
+                Update
+              </button>
+              <button
+                className="block w-full md:inline-block md:w-auto px-4 py-3 md:py-2 hover:bg-gray-400 bg-gray-200 rounded-lg font-semibold text-sm mt-4
           md:mt-0 md:order-1 focus:shadow-outline focus:border-gray-400"
-              data-testid="card-modal-close-button"
-              onClick={() => props.setIsRealTimeDatabaseUpdateModalOn(false)}
-            >
-              Cancel
-            </button>
+                data-testid="card-modal-close-button"
+                onClick={() => props.setIsRealTimeDatabaseUpdateModalOn(false)}
+              >
+                Cancel
+              </button>
+            </div>
           </div>
         </div>
       </div>
