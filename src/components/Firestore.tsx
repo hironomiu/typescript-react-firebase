@@ -29,7 +29,7 @@ const Firestore = () => {
 
     const data = docSnap.docs.map((doc) => {
       const data = doc.data()
-      console.log(data.createdAt.toDate())
+
       return {
         key: doc.id,
         name: data.name,
@@ -94,8 +94,11 @@ const Firestore = () => {
         {firestoreMessages
           ? firestoreMessages.map((data: Message) => (
               <div key={data.key} className="h-8 my-1">
-                {data.name}:{data.text}:{`${data.createdAt.toDate()}`}:
-                {`${data.updatedAt.toDate()}`}
+                {data.name}:{data.text}:
+                {data.createdAt ? `${data.createdAt.toDate()}` : ''}:
+                {data.updatedAt ? `${data.updatedAt.toDate()}` : ''}
+                {/* TODO: 実装 */}
+                <Button>更新</Button>
                 <Button onClick={() => handleClickDelete(data.key)}>
                   削除
                 </Button>
