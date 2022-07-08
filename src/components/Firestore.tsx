@@ -1,16 +1,25 @@
 import { useState, useEffect, useRef } from 'react'
-import { Message } from '../types'
 import { firestoreAddDoc } from '../firebase/firestore/firestoreAddDoc'
 import { firestoreGetDoc } from '../firebase/firestore/firestoreGet'
 import { firestoreRemove } from '../firebase/firestore/firestoreRemove'
+import { formatDate } from '../lib'
 import Button from './parts/Button'
 
+type Message = {
+  key: string
+  name: string
+  text: string
+  createdAt: any
+  updatedAt: any
+}
 const Firestore = () => {
   const mountedRef = useRef(true)
   const [message, setMessage] = useState<Message>({
     key: '',
     name: '',
     text: '',
+    createdAt: '',
+    updatedAt: '',
   })
 
   const [firestoreMessages, setFirestoreMessages] = useState<Message[]>()
@@ -20,7 +29,14 @@ const Firestore = () => {
 
     const data = docSnap.docs.map((doc) => {
       const data = doc.data()
-      return { key: doc.id, name: data.name, text: data.text }
+      console.log(data.createdAt.toDate())
+      return {
+        key: doc.id,
+        name: data.name,
+        text: data.text,
+        createdAt: data.createdAt,
+        updatedAt: data.updatedAt,
+      }
     })
     console.log(data)
     // MEMO: cleanup用
@@ -76,16 +92,15 @@ const Firestore = () => {
           <Button onClick={handleClickPost}>投稿</Button>
         </div>
         {firestoreMessages
-          ? firestoreMessages.map(
-              (data: { key: string; name: string; text: string }) => (
-                <div key={data.key} className="h-8 my-1">
-                  {data.name}:{data.text}
-                  <Button onClick={() => handleClickDelete(data.key)}>
-                    削除
-                  </Button>
-                </div>
-              )
-            )
+          ? firestoreMessages.map((data: Message) => (
+              <div key={data.key} className="h-8 my-1">
+                {data.name}:{data.text}:{`${data.createdAt.toDate()}`}:
+                {`${data.updatedAt.toDate()}`}
+                <Button onClick={() => handleClickDelete(data.key)}>
+                  削除
+                </Button>
+              </div>
+            ))
           : null}
       </div>
     </div>
