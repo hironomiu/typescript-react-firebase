@@ -4,9 +4,8 @@ import { firestoreRemove } from '../firebase/firestore/firestoreRemove'
 import { firestoreUpdate } from '../firebase/firestore/firestoreUpdate'
 import { FirestoreMessage } from '../types/index'
 import Button from './parts/Button'
-import { onSnapshot, query, collection } from 'firebase/firestore'
-import { firestore } from '../firebase/firestore/firestoreRef'
 
+import { firestoreOnSnapshot } from '../firebase/firestore/firestoreOnSnapshot'
 const Firestore = () => {
   const [message, setMessage] = useState<FirestoreMessage>({
     key: '',
@@ -43,22 +42,7 @@ const Firestore = () => {
   // }
 
   useEffect(() => {
-    // TODO: firebase/firestore配下に移動する
-    const q = query(collection(firestore, 'messages'))
-    const unsub = onSnapshot(q, (snapshot) => {
-      const data: FirestoreMessage[] = []
-      snapshot.forEach((doc: any) => {
-        console.log(doc.id)
-        data.push({
-          key: doc.id,
-          name: doc.data().name,
-          text: doc.data().text,
-          createdAt: doc.data().createdAt,
-          updatedAt: doc.data().updatedAt,
-        })
-      })
-      setFirestoreMessages([...data])
-    })
+    const unsub = firestoreOnSnapshot('messages', setFirestoreMessages)
     return () => {
       unsub()
     }
