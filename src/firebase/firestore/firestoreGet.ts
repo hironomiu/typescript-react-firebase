@@ -1,3 +1,4 @@
+// MEMO: Reactからは呼び出していない（onSnapshotでリアルタイム取得をしている）
 import { firestore } from './firestoreRef'
 import { getDocs, collection } from 'firebase/firestore'
 

@@ -14,4 +14,13 @@ export type Message = displayMessage & {
   updatedAt?: number
 }
 
+export type FirestoreMessage = {
+  key: string
+  name: string
+  text: string
+  // TODO: 型
+  createdAt: any
+  updatedAt: any
+}
+
 export type RealTimeDatabaseEntries = [string, Message]

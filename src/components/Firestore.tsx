@@ -2,19 +2,21 @@ import { useState, useEffect, useRef } from 'react'
 import { firestoreAddDoc } from '../firebase/firestore/firestoreAddDoc'
 import { firestoreGetDoc } from '../firebase/firestore/firestoreGet'
 import { firestoreRemove } from '../firebase/firestore/firestoreRemove'
-import { formatDate } from '../lib'
+import { firestoreUpdate } from '../firebase/firestore/firestoreUpdate'
+import { FirestoreMessage } from '../types/index'
 import Button from './parts/Button'
+import {
+  doc,
+  onSnapshot,
+  query,
+  Unsubscribe,
+  collection,
+} from 'firebase/firestore'
+import { firestore } from '../firebase/firestore/firestoreRef'
 
-type Message = {
-  key: string
-  name: string
-  text: string
-  createdAt: any
-  updatedAt: any
-}
 const Firestore = () => {
   const mountedRef = useRef(true)
-  const [message, setMessage] = useState<Message>({
+  const [message, setMessage] = useState<FirestoreMessage>({
     key: '',
     name: '',
     text: '',
@@ -22,36 +24,51 @@ const Firestore = () => {
     updatedAt: '',
   })
 
-  const [firestoreMessages, setFirestoreMessages] = useState<Message[]>()
+  const [firestoreMessages, setFirestoreMessages] =
+    useState<FirestoreMessage[]>()
 
-  const fetchFirestore = async () => {
-    const docSnap = await firestoreGetDoc()
-
-    const data = docSnap.docs.map((doc) => {
-      const data = doc.data()
-
-      return {
-        key: doc.id,
-        name: data.name,
-        text: data.text,
-        createdAt: data.createdAt,
-        updatedAt: data.updatedAt,
-      }
-    })
-    console.log(data)
-    // MEMO: cleanup用
-    if (!mountedRef.current) return null
-    if (data.length === 0) {
-      setFirestoreMessages([])
-    } else {
-      setFirestoreMessages([...data])
-    }
-  }
+  // TODO: docSnap呼び出しのサンプルを別で作る
+  // const fetchFirestore = async () => {
+  //   const docSnap = await firestoreGetDoc()
+  //   const data = docSnap.docs.map((doc) => {
+  //     const data = doc.data()
+  //     return {
+  //       key: doc.id,
+  //       name: data.name,
+  //       text: data.text,
+  //       createdAt: data.createdAt,
+  //       updatedAt: data.updatedAt,
+  //     }
+  //   })
+  //   console.log(data)
+  //   // MEMO: cleanup用
+  //   if (!mountedRef.current) return null
+  //   if (data.length === 0) {
+  //     setFirestoreMessages([])
+  //   } else {
+  //     setFirestoreMessages([...data])
+  //   }
+  // }
 
   useEffect(() => {
-    fetchFirestore()
+    // TODO: firebase/firestore配下に移動する
+    const q = query(collection(firestore, 'messages'))
+    const unsub = onSnapshot(q, (snapshot) => {
+      const data: FirestoreMessage[] = []
+      snapshot.forEach((doc: any) => {
+        console.log(doc.id)
+        data.push({
+          key: doc.id,
+          name: doc.data().name,
+          text: doc.data().text,
+          createdAt: doc.data().createdAt,
+          updatedAt: doc.data().updatedAt,
+        })
+      })
+      setFirestoreMessages([...data])
+    })
     return () => {
-      mountedRef.current = false
+      unsub()
     }
   }, [])
 
@@ -63,12 +80,14 @@ const Firestore = () => {
   }
   const handleClickPost = () => {
     firestoreAddDoc({ refName: 'messages', ...message })
-    fetchFirestore()
   }
 
   const handleClickDelete = (key: string) => {
     firestoreRemove(key)
-    fetchFirestore()
+  }
+
+  const handleClickUpdate = async (data: any) => {
+    await firestoreUpdate(data)
   }
   return (
     <div>
@@ -92,13 +111,13 @@ const Firestore = () => {
           <Button onClick={handleClickPost}>投稿</Button>
         </div>
         {firestoreMessages
-          ? firestoreMessages.map((data: Message) => (
+          ? firestoreMessages.map((data: FirestoreMessage) => (
               <div key={data.key} className="h-8 my-1">
                 {data.name}:{data.text}:
                 {data.createdAt ? `${data.createdAt.toDate()}` : ''}:
                 {data.updatedAt ? `${data.updatedAt.toDate()}` : ''}
                 {/* TODO: 実装 */}
-                <Button>更新</Button>
+                <Button onClick={() => handleClickUpdate(data)}>更新</Button>
                 <Button onClick={() => handleClickDelete(data.key)}>
                   削除
                 </Button>
