@@ -1,21 +1,13 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { firestoreAddDoc } from '../firebase/firestore/firestoreAddDoc'
-import { firestoreGetDoc } from '../firebase/firestore/firestoreGet'
 import { firestoreRemove } from '../firebase/firestore/firestoreRemove'
 import { firestoreUpdate } from '../firebase/firestore/firestoreUpdate'
 import { FirestoreMessage } from '../types/index'
 import Button from './parts/Button'
-import {
-  doc,
-  onSnapshot,
-  query,
-  Unsubscribe,
-  collection,
-} from 'firebase/firestore'
+import { onSnapshot, query, collection } from 'firebase/firestore'
 import { firestore } from '../firebase/firestore/firestoreRef'
 
 const Firestore = () => {
-  const mountedRef = useRef(true)
   const [message, setMessage] = useState<FirestoreMessage>({
     key: '',
     name: '',
