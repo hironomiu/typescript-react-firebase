@@ -4,10 +4,9 @@ import { FirestoreMessage } from '../../types'
 
 export const firestoreOnSnapshot = (ref: string, setFirestoreMessages: any) => {
   const q = query(collection(firestore, ref))
-  const data: FirestoreMessage[] = []
+  let data: FirestoreMessage[] = []
   const unsub = onSnapshot(q, (snapshot) => {
     snapshot.forEach((doc: any) => {
-      console.log(doc.id)
       data.push({
         key: doc.id,
         name: doc.data().name,
@@ -15,8 +14,9 @@ export const firestoreOnSnapshot = (ref: string, setFirestoreMessages: any) => {
         createdAt: doc.data().createdAt,
         updatedAt: doc.data().updatedAt,
       })
-      setFirestoreMessages([...data])
     })
+    setFirestoreMessages((prev: FirestoreMessage[]) => (prev = [...data]))
+    data = []
   })
   return unsub
 }

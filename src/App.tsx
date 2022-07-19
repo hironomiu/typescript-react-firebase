@@ -5,6 +5,7 @@ import Auth from './components/Auth'
 import Main from './components/Main'
 import RealTimeDatabase from './components/RealTimeDatabase'
 import Firestore from './components/Firestore'
+import Home from './components/Home'
 const App = () => {
   return (
     <div>
@@ -13,7 +14,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Layout />}>
               <Route path="/" element={<Main />}>
-                <Route path="/" element={<RealTimeDatabase />}></Route>
+                <Route path="/" element={<Home />}></Route>
                 <Route
                   path="/realtimedatabase"
                   element={<RealTimeDatabase />}

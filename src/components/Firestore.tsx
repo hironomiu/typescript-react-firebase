@@ -15,8 +15,9 @@ const Firestore = () => {
     updatedAt: '',
   })
 
-  const [firestoreMessages, setFirestoreMessages] =
-    useState<FirestoreMessage[]>()
+  const [firestoreMessages, setFirestoreMessages] = useState<
+    FirestoreMessage[]
+  >([])
 
   // TODO: docSnap呼び出しのサンプルを別で作る
   // const fetchFirestore = async () => {
