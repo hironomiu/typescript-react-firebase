@@ -6,6 +6,7 @@ import { FirestoreMessage } from '../types/index'
 import Button from './parts/Button'
 
 import { firestoreOnSnapshot } from '../firebase/firestore/firestoreOnSnapshot'
+import FirestoreUpdate from './modals/FirestoreUpdate'
 const Firestore = () => {
   const [message, setMessage] = useState<FirestoreMessage>({
     key: '',
@@ -19,6 +20,19 @@ const Firestore = () => {
     FirestoreMessage[]
   >([])
 
+  const [isFirestoreUpdateModalOn, setIsFirestoreUpdateModalOn] =
+    useState(false)
+
+  type Message = {
+    key: string
+    name: string
+    text: string
+  }
+  const [toModalMessage, setToModalMessage] = useState<Message>({
+    key: '',
+    name: '',
+    text: '',
+  })
   // TODO: docSnap呼び出しのサンプルを別で作る
   // const fetchFirestore = async () => {
   //   const docSnap = await firestoreGetDoc()
@@ -64,7 +78,9 @@ const Firestore = () => {
   }
 
   const handleClickUpdate = async (data: any) => {
-    await firestoreUpdate(data)
+    setToModalMessage({ key: data.key, name: data.name, text: data.text })
+    setIsFirestoreUpdateModalOn(true)
+    // await firestoreUpdate(data)
   }
   return (
     <div>
@@ -101,6 +117,13 @@ const Firestore = () => {
               </div>
             ))
           : null}
+        {isFirestoreUpdateModalOn ? (
+          <FirestoreUpdate
+            setIsFirestoreUpdateModalOn={setIsFirestoreUpdateModalOn}
+            toModalMessage={toModalMessage}
+            setToModalMessage={setToModalMessage}
+          />
+        ) : null}
       </div>
     </div>
   )
