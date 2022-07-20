@@ -10,6 +10,8 @@ const Header = () => {
   const isLogin = useRecoilValue(isLoginState)
   const [nav, setNav] = useState(false)
   const firebaeSignOut = async () => {
+    // TODO: SignOutしたらNAVを閉じた状態にする
+    setNav(false)
     await signOut()
     setIsLogin(false)
   }
@@ -26,7 +28,7 @@ const Header = () => {
       </div>
       <div className="flex">
         {isLogin ? (
-          <nav className="flex ml-4 justify-between">
+          <nav className="flex mr-4 justify-between">
             <ul className="hidden md:flex">
               <li>
                 <Link to="/realtimedatabase" className="mx-2">
@@ -55,13 +57,18 @@ const Header = () => {
               className={
                 !nav
                   ? 'md:hidden fixed left-0 top-0 w-[60%] border-r h-full bg-white ease-in-out duration-500'
-                  : 'fixed left-[-100%]'
+                  : 'fixed ease-in-out top-0 duration-700 left-[-100%]'
               }
             >
               <h1 className="w-full text-3xl font-bold ml-8 my-8">
-                Web Server.
+                Side Menu.
               </h1>
               <ul className="uppercase p-4">
+                <li className="p-4 border-b border-gray-600">
+                  <Link to="/" className="mx-2">
+                    Home
+                  </Link>
+                </li>
                 <li className="p-4 border-b border-gray-600">
                   <Link to="/realtimedatabase" className="mx-2">
                     RealTimeDatabase
