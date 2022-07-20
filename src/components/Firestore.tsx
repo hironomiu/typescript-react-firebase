@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { firestoreAddDoc } from '../firebase/firestore/firestoreAddDoc'
 import { firestoreRemove } from '../firebase/firestore/firestoreRemove'
-import { firestoreUpdate } from '../firebase/firestore/firestoreUpdate'
 import { FirestoreMessage } from '../types/index'
 import Button from './parts/Button'
 
@@ -80,8 +79,8 @@ const Firestore = () => {
   const handleClickUpdate = async (data: any) => {
     setToModalMessage({ key: data.key, name: data.name, text: data.text })
     setIsFirestoreUpdateModalOn(true)
-    // await firestoreUpdate(data)
   }
+
   return (
     <div>
       <div className="flex flex-col m-2">
@@ -109,7 +108,6 @@ const Firestore = () => {
                 {data.name}:{data.text}:
                 {data.createdAt ? `${data.createdAt.toDate()}` : ''}:
                 {data.updatedAt ? `${data.updatedAt.toDate()}` : ''}
-                {/* TODO: 実装 */}
                 <Button onClick={() => handleClickUpdate(data)}>更新</Button>
                 <Button onClick={() => handleClickDelete(data.key)}>
                   削除
