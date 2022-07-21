@@ -10,8 +10,7 @@ const Header = () => {
   const isLogin = useRecoilValue(isLoginState)
   const [nav, setNav] = useState(false)
   const firebaeSignOut = async () => {
-    // TODO: SignOutしたらNAVを閉じた状態にする
-    setNav(false)
+    handleNav()
     await signOut()
     setIsLogin(false)
   }
@@ -64,19 +63,26 @@ const Header = () => {
                 Side Menu.
               </h1>
               <ul className="uppercase p-4">
-                <li className="p-4 border-b border-gray-600">
+                <li
+                  onClick={handleNav}
+                  className="p-4 border-b border-gray-600"
+                >
                   <Link to="/" className="mx-2">
                     Home
                   </Link>
                 </li>
                 <li className="p-4 border-b border-gray-600">
-                  <Link to="/realtimedatabase" className="mx-2">
+                  <Link
+                    onClick={handleNav}
+                    to="/realtimedatabase"
+                    className="mx-2"
+                  >
                     RealTimeDatabase
                   </Link>
                 </li>
                 <li className="p-4 border-b border-gray-600">
                   {' '}
-                  <Link to="/firestore" className="mx-2">
+                  <Link onClick={handleNav} to="/firestore" className="mx-2">
                     Firestore
                   </Link>
                 </li>
