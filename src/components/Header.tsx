@@ -23,7 +23,7 @@ const Header = () => {
     <header className="flex items-center h-24 border-b-[1px] shadow-md justify-between">
       <div className="flex ml-8">
         <Link to="/" className="">
-          <h1 className="w-full text-3xl font-bold ml-4 my-8">Web Server.</h1>
+          <h1 className="w-full text-3xl font-bold  my-8">Web Server.</h1>
         </Link>
       </div>
       <div className="flex">
@@ -57,10 +57,10 @@ const Header = () => {
               className={
                 !nav
                   ? 'md:hidden fixed left-0 top-0 w-[60%] border-r h-full bg-white ease-in-out duration-500'
-                  : 'fixed ease-in-out top-0 duration-700 left-[-100%]'
+                  : 'fixed ease-in-out top-0 duration-700 left-[-100%] h-full'
               }
             >
-              <h1 className="w-full text-3xl font-bold ml-8 my-8">
+              <h1 className="w-full text-3xl pl-8 font-bold  my-8">
                 Side Menu.
               </h1>
               <ul className="uppercase p-4">
