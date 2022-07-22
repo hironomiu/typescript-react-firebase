@@ -2,17 +2,20 @@ import { useState } from 'react'
 import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai'
 import { Link } from 'react-router-dom'
 import { useSetRecoilState, useRecoilValue } from 'recoil'
-import { isLoginState } from '../recoil'
+import { isLoginState, userState } from '../recoil'
 import { signOut } from '../firebase/auth/signOut'
 
 const Header = () => {
   const setIsLogin = useSetRecoilState(isLoginState)
+  const setUser = useSetRecoilState(userState)
+  const user = useRecoilValue(userState)
   const isLogin = useRecoilValue(isLoginState)
   const [nav, setNav] = useState(false)
   const firebaeSignOut = async () => {
     handleNav()
     await signOut()
     setIsLogin(false)
+    setUser({ nickname: '', email: '' })
   }
 
   const handleNav = () => {
@@ -22,7 +25,9 @@ const Header = () => {
     <header className="flex items-center h-24 border-b-[1px] shadow-md justify-between">
       <div className="flex ml-8">
         <Link to="/" className="">
-          <h1 className="w-full text-3xl font-bold  my-8">Web Server.</h1>
+          <h1 className="w-full text-3xl font-bold  my-8">
+            Web Server.({user.nickname ? user.nickname : null})
+          </h1>
         </Link>
       </div>
       <div className="flex">
