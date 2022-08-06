@@ -82,47 +82,43 @@ const Firestore = () => {
   }
 
   return (
-    <div>
-      <div className="flex flex-col m-2">
-        <h2>Firestore</h2>
-        <div>
-          <input
-            type="text"
-            placeholder="name"
-            value={message.name}
-            onChange={handleNameChange}
-            className="border-[1px] px-2 py-1 mr-1"
-          />
-          <input
-            type="text"
-            placeholder="text"
-            value={message.text}
-            onChange={handleTextChange}
-            className="border-[1px] px-2 py-1 mr-1"
-          />
-          <Button onClick={handleClickPost}>投稿</Button>
-        </div>
-        {firestoreMessages
-          ? firestoreMessages.map((data: FirestoreMessage) => (
-              <div key={data.key} className="h-8 my-1">
-                {data.name}:{data.text}:
-                {data.createdAt ? `${data.createdAt.toDate()}` : ''}:
-                {data.updatedAt ? `${data.updatedAt.toDate()}` : ''}
-                <Button onClick={() => handleClickUpdate(data)}>更新</Button>
-                <Button onClick={() => handleClickDelete(data.key)}>
-                  削除
-                </Button>
-              </div>
-            ))
-          : null}
-        {isFirestoreUpdateModalOn ? (
-          <FirestoreUpdate
-            setIsFirestoreUpdateModalOn={setIsFirestoreUpdateModalOn}
-            toModalMessage={toModalMessage}
-            setToModalMessage={setToModalMessage}
-          />
-        ) : null}
+    <div className="flex flex-col m-2 w-full">
+      <h2>Firestore</h2>
+      <div>
+        <input
+          type="text"
+          placeholder="name"
+          value={message.name}
+          onChange={handleNameChange}
+          className="border-[1px] px-2 py-1 mr-1"
+        />
+        <input
+          type="text"
+          placeholder="text"
+          value={message.text}
+          onChange={handleTextChange}
+          className="border-[1px] px-2 py-1 mr-1"
+        />
+        <Button onClick={handleClickPost}>投稿</Button>
       </div>
+      {firestoreMessages
+        ? firestoreMessages.map((data: FirestoreMessage) => (
+            <div key={data.key} className="h-8 lg:my-4 my-8">
+              {data.name}:{data.text}:
+              {data.createdAt ? `${data.createdAt.toDate()}` : ''}:
+              {data.updatedAt ? `${data.updatedAt.toDate()}` : ''}
+              <Button onClick={() => handleClickUpdate(data)}>更新</Button>
+              <Button onClick={() => handleClickDelete(data.key)}>削除</Button>
+            </div>
+          ))
+        : null}
+      {isFirestoreUpdateModalOn ? (
+        <FirestoreUpdate
+          setIsFirestoreUpdateModalOn={setIsFirestoreUpdateModalOn}
+          toModalMessage={toModalMessage}
+          setToModalMessage={setToModalMessage}
+        />
+      ) : null}
     </div>
   )
 }

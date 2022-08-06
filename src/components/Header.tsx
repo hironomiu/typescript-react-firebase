@@ -26,7 +26,7 @@ const Header = () => {
       <div className="flex ml-8">
         <Link to="/" className="">
           <h1 className="w-full text-3xl font-bold  my-8">
-            Web Server.({user.nickname ? user.nickname : null})
+            Web Server.{user.nickname ? '(' + user.nickname + ')' : null}
           </h1>
         </Link>
       </div>
@@ -72,7 +72,7 @@ const Header = () => {
                   onClick={handleNav}
                   className="p-4 border-b border-gray-600"
                 >
-                  <Link to="/" className="mx-2">
+                  <Link to="/" className="mx-2 block">
                     Home
                   </Link>
                 </li>
@@ -80,19 +80,23 @@ const Header = () => {
                   <Link
                     onClick={handleNav}
                     to="/realtimedatabase"
-                    className="mx-2"
+                    className="mx-2 block"
                   >
                     RealTimeDatabase
                   </Link>
                 </li>
                 <li className="p-4 border-b border-gray-600">
                   {' '}
-                  <Link onClick={handleNav} to="/firestore" className="mx-2">
+                  <Link
+                    onClick={handleNav}
+                    to="/firestore"
+                    className="mx-2 block"
+                  >
                     Firestore
                   </Link>
                 </li>
                 <li className="p-4">
-                  <button className="mx-2" onClick={firebaeSignOut}>
+                  <button className="mx-2 block" onClick={firebaeSignOut}>
                     SignOut
                   </button>
                 </li>
